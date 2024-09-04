@@ -1,7 +1,7 @@
 import React from "react";
 
 const Chip = ({ label, isChosen, onClick }) => {
-  console.log(isChosen);
+  // console.log(isChosen);
   return (
     <span
       onClick={onClick}
