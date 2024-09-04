@@ -1,6 +1,11 @@
 import React from "react";
 
-const Pagination = ({ currentLimit, onPageChange, currentPage }) => {
+const Pagination = ({
+  currentLimit,
+  onPageChange,
+  currentPage,
+  totalPages,
+}) => {
   // const handlePageChange = (page) => {};
 
   return (
@@ -23,8 +28,8 @@ const Pagination = ({ currentLimit, onPageChange, currentPage }) => {
       {/* Next Button */}
       <button
         onClick={() => onPageChange(currentLimit + 10)}
-        className={`px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 "hover:bg-gray-200"} transition`}
-        // disabled={currentLimit === totalPages}
+        className={`px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 "hover:bg-gray-200"} transition ${totalPages < 30 ? "opacity-50 cursor-not-allowed" : ""}}`}
+        disabled={totalPages < 30}
       >
         &gt;
       </button>

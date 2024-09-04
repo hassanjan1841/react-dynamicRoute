@@ -15,6 +15,7 @@ const Home = () => {
     sortMethod: "",
     sortBy: "",
   });
+  const [totalPages, setTotalPages] = useState(0);
 
   const currentPage = currentLimit / 10;
 
@@ -33,7 +34,9 @@ const Home = () => {
             : `https://dummyjson.com/products?skip=${currentLimit}&limit=10&sortBy=${sortTitle}&order=${sortOrder.sortMethod}`
         : sortOrder.sortMethod !== "" && currentLimit > 10
           ? `https://dummyjson.com/products/category/${chosenCategory}?sortBy=${sortTitle}&order=${sortOrder.sortMethod}&skip=${currentLimit}&limit=10`
-          : "";
+          : sortOrder.sortMethod !== "" && currentLimit === 10
+            ? `https://dummyjson.com/products/category/${chosenCategory}?sortBy=${sortTitle}&order=${sortOrder.sortMethod}`
+            : `https://dummyjson.com/products/category/${chosenCategory}`;
     console.log("Base URL:", baseUrl);
     return baseUrl;
     // return `${baseUrl}?sortBy=title&order=${sortOrder}&skip=${currentLimit}&limit=10`;
@@ -49,6 +52,7 @@ const Home = () => {
       .then((data) => {
         console.log("data getting ", data);
         setProducts(data.products);
+        setTotalPages(data.total);
         setLoading(false);
       });
   }, [chosenCategory, currentLimit, sortOrder]);
@@ -64,7 +68,15 @@ const Home = () => {
 
   const onSortChange = (sortBy) => {
     const sortMethod =
-      sortBy === "a-z" ? "asc" : sortBy === "low-to-high" ? "asc" : "desc";
+      sortBy === "a-z"
+        ? "asc"
+        : sortBy === "low-to-high"
+          ? "asc"
+          : sortBy === "all"
+            ? ""
+            : "desc";
+    // if (sortBy === "all") sortBy = "";
+
     setSortOrder({ ...sortOrder, sortMethod, sortBy });
   };
 
@@ -100,7 +112,10 @@ const Home = () => {
         </div>
 
         {/* Filters */}
-        <Filters onSortChange={onSortChange} chosenFilter={sortOrder.sortBy} />
+        <Filters
+          onSortChange={onSortChange}
+          chosenFilter={sortOrder.sortBy === "" ? "all" : sortOrder.sortBy}
+        />
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -113,6 +128,7 @@ const Home = () => {
           currentLimit={currentLimit}
           onPageChange={handlePageChange}
           currentPage={currentPage}
+          totalPages={totalPages}
         />
       </div>
     </div>

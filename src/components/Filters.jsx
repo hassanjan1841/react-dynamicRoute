@@ -3,6 +3,12 @@ function Filters({ onSortChange, chosenFilter }) {
   return (
     <div className="flex justify-start space-x-3 mb-8">
       <button
+        onClick={() => onSortChange("all")}
+        className={`${chosenFilter == "all" ? "bg-slate-800 text-white" : "bg-white text-gray-700"} px-4 py-2 bg-white shadow-md hover:shadow-lg rounded-md text-gray-700 transition duration-300`}
+      >
+        All
+      </button>
+      <button
         onClick={() => onSortChange("a-z")}
         className={`${chosenFilter == "a-z" ? "bg-slate-800 text-white" : "bg-white text-gray-700"} px-4 py-2 bg-white shadow-md hover:shadow-lg rounded-md text-gray-700 transition duration-300`}
       >
