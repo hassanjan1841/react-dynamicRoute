@@ -1,7 +1,7 @@
 function Filters({ onSortChange, chosenFilter }) {
   console.log("chosenFilter", chosenFilter);
   return (
-    <div className="flex justify-start space-x-3 mb-8">
+    <div className="flex sm:justify-start justify-center space-x-3 mb-8 w-full flex-wrap gap-5">
       <button
         onClick={() => onSortChange("all")}
         className={`${chosenFilter == "all" ? "bg-slate-800 text-white" : "bg-white text-gray-700"} px-4 py-2  shadow-md hover:shadow-lg rounded-md text-gray-700 transition duration-300`}
